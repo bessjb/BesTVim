@@ -1,0 +1,50 @@
+name: Build AppImage
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout source
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js (or Python, C++, according to project needs)
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'  # Modify according to requirements
+
+    - name: Install dependencies
+      run: npm install  # Change this according to your project's package manager and dependencies
+
+    - name: Build application
+      run: npm run build  # Change according to your build script
+
+    - name: Download tools
+      run: |
+        wget -O appimagetool-x86_64.AppImage https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage
+        chmod +x appimagetool-x86_64.AppImage
+        wget -O linuxdeploy-x86_64.AppImage https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage
+        chmod +x linuxdeploy-x86_64.AppImage
+
+    - name: Make AppDir
+      run: |
+        mkdir -p AppDir/usr/bin
+        cp -r your-compiled-app-binaries-or-files AppDir/usr/bin/  # Adapt to your build output
+
+    - name: Package AppImage using linuxdeploy
+      run: |
+        ./linuxdeploy-x86_64.AppImage --appdir AppDir --output appimage
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: MyAppImage
+        path: *.AppImage
