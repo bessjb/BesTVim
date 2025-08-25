@@ -38,18 +38,7 @@ return {
       }
     })
 
-    require("lspconfig").ltex.setup {
-      settings = {
-        ltex = {
-          language = "en",
-          additionalRules = {
-            languageModel = "/home/jake/.config/ngrams",
-          },
-        },
-      },
-    }
-
-    vim.keymap.set("n", "<leader>gh", function() vim.api.nvim_command("ClangdSwitchSourceHeader") end)
+    vim.keymap.set("n", "<leader>lh", function() vim.api.nvim_command("ClangdSwitchSourceHeader") end)
 
     -- On attach
     vim.api.nvim_create_autocmd('LspAttach', {
@@ -67,7 +56,7 @@ return {
 
         local client = vim.lsp.get_client_by_id(event.data.client_id)
         if client.server_capabilities.definitionProvider then
-          vim.keymap.set("n", "<leader>gd", function()
+          vim.keymap.set("n", "<leader>ld", function()
             vim.lsp.buf.definition()
           end)
         end

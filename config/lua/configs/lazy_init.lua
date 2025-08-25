@@ -13,9 +13,8 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
   end
 end
 vim.opt.rtp:prepend(lazypath)
-
-require("lazy").setup({
-  spec = "plugins",
-  change_detection = { notify = false }
-})
+opts = require("lazy.core.config").defaults
+opts.rocks.hererocks = false
+opts.dev.path = "/root/projects"
+require("lazy").setup({spec = "plugins"}, opts)
 

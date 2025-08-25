@@ -37,3 +37,8 @@ vim.keymap.set('n', '<leader>n', vim.diagnostic.goto_prev)
 vim.keymap.set('n', '<leader>b', vim.diagnostic.goto_next)
 
 vim.keymap.set('t', '<leader><Esc>', '<C-\\><C-n>')
+
+vim.api.nvim_set_keymap("n", "<leader>gs", ":vertical Git<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>gl", ":vertical Git log<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>gd", ":Gvdiffsplit<CR>", { noremap = true, silent = true })
+
